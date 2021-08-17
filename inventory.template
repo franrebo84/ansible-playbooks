@@ -1,0 +1,1 @@
+lab ansible_host=lab.ip.address ansible_user=ubuntu ansible_password=somepass ansible_become_password=somepass

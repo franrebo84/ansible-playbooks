@@ -1,0 +1,32 @@
+- hosts: fran
+  become: yes
+  vars:
+    zusername: ubuntu
+  roles:
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: "{{ zusername }}"
+          oh_my_zsh:
+            theme: powerlevel10k
+            plugins:
+              - git
+  post_tasks:
+    - name: Clone powerlevel10k repo
+      ansible.builtin.git:
+        repo: https://github.com/romkatv/powerlevel10k.git
+        dest: /home/{{ zusername }}/.oh-my-zsh/themes/powerlevel10k
+        depth: 1
+    - name: copy .p10k.zsh template
+      ansible.builtin.copy:
+        src: .p10k.zsh
+        dest: /home/{{ zusername }}/.p10k.zsh
+        owner: "{{ zusername }}"
+        group: "{{ zusername }}"
+        mode: u+rw,g-wx,o-rwx
+    - name: copy .zshrc template
+      ansible.builtin.copy:
+        src: .zshrc
+        dest: /home/{{ zusername }}/.zshrc
+        owner: "{{ zusername }}"
+        group: "{{ zusername }}"
+        mode: u+rw,g-wx,o-rwx
