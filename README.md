@@ -8,7 +8,7 @@ https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.ht
 
 ```bash
 # git clone https://github.com/franrebo84/ansible-playbooks
-# cd ansible_hardering_apache
+# cd ansible-playbooks
 ```
 
 ## Preerequisites
