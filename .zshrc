@@ -87,9 +87,7 @@ git
 docker
 kubectl
 history
-zsh-autosuggestions
 kube-ps1
-tmux
 git-auto-fetch
 #fast-syntax-highlighting
 ) 

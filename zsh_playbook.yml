@@ -1,7 +1,7 @@
-- hosts: fran
+- hosts: all
   become: yes
   vars:
-    zusername: ubuntu
+    zusername: synchro
   roles:
     - role: gantsign.oh-my-zsh
       users:
@@ -30,3 +30,39 @@
         owner: "{{ zusername }}"
         group: "{{ zusername }}"
         mode: u+rw,g-wx,o-rwx
+
+    - name: Install extra-packages
+      package:
+        name:
+          - vim
+          - git
+          - jq
+        state: latest
+
+    - name: craete vim themes dir
+      file:
+        state: directory
+        path: /home/{{ zusername }}/.vim/pack/themes/start
+        owner: "{{ zusername }}"
+        group: "{{ zusername }}"
+        mode: u+rw,g-wx,o-rwx
+
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: 'https://github.com/dracula/vim.git'
+        dest: /home/{{ zusername }}/.vim/pack/themes/start/dracula
+
+    - name: Update/create .vimrc
+      lineinfile:
+        dest: /home/{{ zusername }}/.vim/vimrc
+        line: "{{ item }}"
+        create: true
+      with_items:
+        - "packadd! dracula"
+        - "syntax enable"
+        - "colorscheme dracula"
+        - "set nu"
+        - "set showmatch"
+      tags: 
+        aaa
+   
